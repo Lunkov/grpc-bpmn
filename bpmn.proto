@@ -1,0 +1,35 @@
+//bpmn.proto
+syntax = "proto3";
+// go_package = "srv.bpmn";
+package srv_bpmn;
+
+service BPMNService {
+  rpc RegisterFunction(RPCFuncInfo) returns (RPCFuncResponse) {}
+}
+
+service BPMNJob {
+  rpc CallFunction(RPCBPMNJob) returns (RPCBPMNJobResponse) {}
+}
+
+message RPCFuncInfo {
+  string base_url  = 1;
+  string func_name = 2;
+  int32  timeout = 3;
+}
+
+message RPCFuncResponse {
+  bool appended = 1;
+}
+
+message RPCBPMNJob {
+  string bpmnProcessId = 1;
+  int32  version = 2;
+  map<string, string> parameters = 3; 
+}
+
+message RPCBPMNJobResponse {
+  string  bpmnProcessId = 1;
+  bool    ok = 2;
+  string  error = 3;
+  map<string, string> results = 4; 
+}
